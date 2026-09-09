@@ -89,7 +89,8 @@ A full-stack, role-based task management application for organizations to manage
 - ASP.NET Core Web API
 - .NET 10
 - Entity Framework Core
-- SQL Server
+- PostgreSQL
+- Npgsql Entity Framework Core Provider
 - JWT Bearer Authentication
 - BCrypt.Net
 - Swagger / OpenAPI
@@ -101,14 +102,16 @@ A full-stack, role-based task management application for organizations to manage
 - React Router
 - Axios
 - Lucide React
-- Nginx
 
-### DevOps
+### DevOps & Deployment
 
 - Docker
 - Docker Compose
-- SQL Server container
 - Multi-stage Docker builds
+- Neon PostgreSQL
+- Render
+- Vercel
+- Nginx
 
 ---
 
@@ -153,21 +156,34 @@ Team Task Management/
 ## 👤 Role Permissions
 
 | Capability | Admin | Manager | User |
-|---|:---:|:---:|:---:|
-| Login / Register | ✅ | ✅ | ✅ |
-| View Dashboard | ✅ | ✅ | ✅ |
-| View Tasks | ✅ | ✅ | ✅ |
-| Create Tasks | ✅ | ✅ | Limited |
-| Assign Tasks | ✅ | ✅ | Limited |
-| Update Permitted Task Status | ✅ | ✅ | ✅ |
-| Create Teams | ✅ | ✅ | ❌ |
-| Manage Team Members | ✅ | ✅ | ❌ |
-| Comments | ✅ | ✅ | ✅ |
-| Notifications | ✅ | ✅ | ✅ |
-| Manage Users | ✅ | ❌ | ❌ |
-| Change User Roles | ✅ | ❌ | ❌ |
-| Activate / Deactivate Users | ✅ | ❌ | ❌ |
 
+|---|:---:|:---:|:---:|
+
+| Login / Register | ✅ | ✅ | ✅ |
+
+| View Dashboard | ✅ | ✅ | ✅ |
+
+| View Tasks | ✅ | ✅ | ✅ |
+
+| Create Tasks | ✅ | ✅ | Limited |
+
+| Assign Tasks | ✅ | ✅ | Limited |
+
+| Update Permitted Task Status | ✅ | ✅ | ✅ |
+
+| Create Teams | ✅ | ✅ | ❌ |
+
+| Manage Team Members | ✅ | ✅ | ❌ |
+
+| Comments | ✅ | ✅ | ✅ |
+
+| Notifications | ✅ | ✅ | ✅ |
+
+| Manage Users | ✅ | ❌ | ❌ |
+
+| Change User Roles | ✅ | ❌ | ❌ |
+
+| Activate / Deactivate Users | ✅ | ❌ | ❌ |
 
 > Backend authorization is authoritative. Frontend role restrictions are primarily used for navigation and user experience.
 
@@ -189,9 +205,57 @@ Swagger
 When running the API in Development mode:
 
 http://localhost:5138/swagger
+
+Swagger is enabled for Development environments.
+
+🌐 Live Deployment
+
+The application is deployed using a separate frontend, backend, and database architecture.
+
+Frontend
+
+Vercel
+
+https://team-task-management-frontend.vercel.app
+Backend
+
+Render
+
+https://team-task-management-api.onrender.com
+
+API base URL:
+
+https://team-task-management-api.onrender.com/api
+Database
+
+Neon PostgreSQL
+
+The production backend uses PostgreSQL hosted on Neon.
+
+The database connection string is provided to the backend through environment variables and is never committed to source control.
+
+Production Architecture
+                         ┌─────────────────────┐
+                         │       Vercel        │
+                         │   React + Vite      │
+                         └──────────┬──────────┘
+                                    │
+                                    │ HTTPS
+                                    ▼
+                         ┌─────────────────────┐
+                         │       Render        │
+                         │ ASP.NET Core Web API│
+                         └──────────┬──────────┘
+                                    │
+                                    │ PostgreSQL
+                                    ▼
+                         ┌─────────────────────┐
+                         │   Neon PostgreSQL   │
+                         │     Production DB   │
+                         └─────────────────────┘
 🐳 Running with Docker Compose
 
-Docker Compose is the recommended way to run the complete application.
+Docker Compose can be used to run the complete application locally.
 
 Prerequisites
 
@@ -199,33 +263,30 @@ Install:
 
 Docker Desktop
 Git
+.NET SDK 10
+Node.js
 1. Clone the Repository
 git clone https://github.com/mukulparmar0110/team-task-management.git
+
 cd team-task-management
 2. Create Environment File
 cp .env.example .env
 
-Update .env with your own secure values:
+Update .env with your own secure local development values:
 
 MSSQL_SA_PASSWORD=your-secure-sql-server-password
 JWT_SECRET_KEY=your-secure-jwt-secret
 
-Never commit .env to Git.
+.env must never be committed to Git.
 
 3. Start the Application
 docker compose up --build
 4. Open the Application
-
 Frontend
-
 http://localhost:5173
-
 Backend
-
 http://localhost:5138
-
 Swagger
-
 http://localhost:5138/swagger
 5. Stop the Application
 
@@ -237,7 +298,7 @@ Or run:
 
 docker compose down
 
-Do not use docker compose down -v unless you intentionally want to delete the persistent SQL Server volume.
+Do not use docker compose down -v unless you intentionally want to delete the persistent local SQL Server volume.
 
 💻 Running the Backend Locally
 
@@ -256,6 +317,10 @@ dotnet build
 Run:
 
 dotnet run
+
+The local API runs on:
+
+http://localhost:5138
 Local Secrets
 
 The backend uses .NET User Secrets for local development.
@@ -293,17 +358,32 @@ Example:
 VITE_API_URL=http://localhost:5138/api
 🗄️ Database
 
-The application uses:
+The project supports different database environments.
+
+Production
+
+Production uses:
+
+PostgreSQL
+Neon
+Entity Framework Core
+EF Core Migrations
+
+The production database connection is supplied through the backend environment configuration.
+
+Local Docker Development
+
+Docker Compose uses:
 
 SQL Server
-Entity Framework Core
-EF Core migrations
+SQL Server Docker Container
+EF Core
+Persistent Docker Volume
 
-Database initialization applies available migrations during application startup.
+This allows the project to be developed and tested locally using SQL Server while the deployed application uses PostgreSQL.
 
-When running through Docker Compose, SQL Server data is persisted using the named Docker volume:
+Database migrations are applied by the backend during application startup when required.
 
-sqlserver_data
 🔑 Sample Assessment Accounts
 
 The application includes seeded accounts for development and assessment purposes.
@@ -313,7 +393,9 @@ Admin	admin@teamtask.com	Admin@12345
 Manager	manager@teamtask.com	Manager@12345
 User	user@teamtask.com	User@12345
 
-These credentials are intended for local development and assessment demonstrations. For production deployment, fixed demo credentials should be replaced with a secure administrator bootstrap process.
+These credentials are intended for local development and assessment demonstrations only.
+
+Production deployments should use a secure administrator bootstrap process and should not rely on publicly documented fixed credentials.
 
 🔒 Security
 
@@ -333,7 +415,8 @@ Environment-based secret configuration
 .env protection through .gitignore
 EF Core relational constraints
 Database indexes
-Persistent SQL Server storage
+Environment-specific database configuration
+HTTPS for deployed frontend and backend communication
 🔐 Git & Secrets
 
 The repository intentionally tracks:
@@ -364,9 +447,13 @@ git push
 🧪 Build Verification
 Backend
 cd Backend/TeamTaskManagement.API
+
+dotnet restore
 dotnet build
 Frontend
 cd Frontend
+
+npm install
 npm run build
 Docker
 
@@ -398,15 +485,20 @@ The current implementation covers the core assessment requirements:
 ✅ Dashboard
 ✅ Responsive React Frontend
 ✅ REST API
-✅ SQL Server
+✅ PostgreSQL Production Database
+✅ SQL Server Local Docker Database
 ✅ Entity Framework Core
 ✅ Swagger / OpenAPI
 ✅ Docker
 ✅ Docker Compose
-✅ Persistent Database Volume
+✅ Persistent Local Database Volume
 ✅ GitHub Repository
 ✅ Environment Secret Protection
+✅ Vercel Deployment
+✅ Render Deployment
+✅ Neon PostgreSQL Deployment
 ✅ Project Documentation
+
 🌐 Repository
 
 GitHub:
