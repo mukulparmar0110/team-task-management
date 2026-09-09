@@ -150,23 +150,26 @@ Team Task Management/
 ├── .gitignore
 ├── docker-compose.yml
 └── README.md
-👤 Role Permissions
-Capability	Admin	Manager	User
-Login / Register	✅	✅	✅
-View Dashboard	✅	✅	✅
-View Tasks	✅	✅	✅
-Create Tasks	✅	✅	Limited
-Assign Tasks	✅	✅	Limited
-Update Permitted Task Status	✅	✅	✅
-Create Teams	✅	✅	❌
-Manage Team Members	✅	✅	❌
-Comments	✅	✅	✅
-Notifications	✅	✅	✅
-Manage Users	✅	❌	❌
-Change User Roles	✅	❌	❌
-Activate / Deactivate Users	✅	❌	❌
+## 👤 Role Permissions
 
-Backend authorization is authoritative. Frontend role restrictions are primarily used for navigation and user experience.
+| Capability | Admin | Manager | User |
+|---|:---:|:---:|:---:|
+| Login / Register | ✅ | ✅ | ✅ |
+| View Dashboard | ✅ | ✅ | ✅ |
+| View Tasks | ✅ | ✅ | ✅ |
+| Create Tasks | ✅ | ✅ | Limited |
+| Assign Tasks | ✅ | ✅ | Limited |
+| Update Permitted Task Status | ✅ | ✅ | ✅ |
+| Create Teams | ✅ | ✅ | ❌ |
+| Manage Team Members | ✅ | ✅ | ❌ |
+| Comments | ✅ | ✅ | ✅ |
+| Notifications | ✅ | ✅ | ✅ |
+| Manage Users | ✅ | ❌ | ❌ |
+| Change User Roles | ✅ | ❌ | ❌ |
+| Activate / Deactivate Users | ✅ | ❌ | ❌ |
+
+
+> Backend authorization is authoritative. Frontend role restrictions are primarily used for navigation and user experience.
 
 🔌 API
 
