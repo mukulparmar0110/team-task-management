@@ -1,101 +1,125 @@
-Team Task Management System
+# Team Task Management System
 
-A full-stack, role-based task management application for organizations
-to manage teams, assign work, track progress, collaborate through
-comments, and receive task-related notifications.
+A full-stack, role-based task management application for organizations to manage teams, assign tasks, track progress, collaborate through comments, and receive task-related notifications.
 
-Features
+---
 
-Authentication & Authorization
+## 🚀 Features
 
-User registration and login
+### 🔐 Authentication & Authorization
 
-JWT-based authentication
+- User registration and login
+- JWT-based authentication
+- Secure password hashing using BCrypt
+- Role-based access control
+- Three user roles:
+  - Admin
+  - Manager
+  - User
+- Active/inactive user status
+- JWT expiration and lifetime validation
+- Protected API endpoints
+- Protected frontend routes
 
-Secure password hashing with BCrypt
+### 📋 Task Management
 
-Role-based access control
+- Create tasks
+- Assign tasks to users
+- Task statuses:
+  - To Do
+  - In Progress
+  - Done
+- Task priorities
+- Due dates
+- Task filtering
+- Task details
+- Edit tasks
+- Role-based task authorization
 
-Admin, Manager, and User roles
+### 👥 Team Management
 
-Active/inactive user status
+- Create teams
+- View team details
+- Add members to teams
+- Manager/Admin team management
+- Team-based task assignment
 
-JWT expiration and validation
+### 💬 Collaboration
 
-Protected API endpoints and frontend routes
+- Add comments to tasks
+- Edit permitted comments
+- Delete permitted comments
+- Backend authorization prevents users from modifying other users' comments
 
-Task Management
+### 🔔 Notifications
 
-Create and assign tasks
+- In-app notifications
+- Task assignment notifications
+- Task status update notifications
+- Unread notification count
+- Mark individual notifications as read
+- Mark all notifications as read
 
-Statuses: To Do, In Progress, Done
+### 📊 Dashboard
 
-Priority and due dates
+- Task statistics
+- Task status overview
+- User-oriented task information
+- Filtering by:
+  - Status
+  - Priority
+  - Deadline
 
-Task filtering
+### 📱 Responsive UI
 
-Task details and editing
+- Responsive React interface
+- Desktop sidebar navigation
+- Mobile bottom navigation
+- Mobile "More" menu
+- Admin-only Users management
+- Settings page
+- Consistent light theme
 
-Role-based task access
+---
 
-Team Management
+## 🛠️ Tech Stack
 
-Create teams
+### Backend
 
-View team details
+- ASP.NET Core Web API
+- .NET 10
+- Entity Framework Core
+- SQL Server
+- JWT Bearer Authentication
+- BCrypt.Net
+- Swagger / OpenAPI
 
-Add members to teams
+### Frontend
 
-Manager/Admin team management
+- React 19
+- Vite
+- React Router
+- Axios
+- Lucide React
+- Nginx
 
-Team-based task assignment
+### DevOps
 
-Collaboration & Notifications
+- Docker
+- Docker Compose
+- SQL Server container
+- Multi-stage Docker builds
 
-Add, edit, and delete permitted task comments
+---
 
-In-app notifications
+## 🏗️ Project Architecture
 
-Task assignment notifications
-
-Task status update notifications
-
-Unread notifications
-
-Mark one or all notifications as read
-
-Dashboard & UI
-
-Task statistics and status overview
-
-Filtering by status, priority, and deadline
-
-Responsive React interface
-
-Desktop sidebar and mobile navigation
-
-Admin-only Users management
-
-Settings page
-
-Consistent light theme
-
-Tech Stack
-
-Backend - ASP.NET Core Web API - .NET 10 - Entity Framework Core -
-SQL Server - JWT Bearer Authentication - BCrypt.Net - Swagger / OpenAPI
-
-Frontend - React 19 - Vite - React Router - Axios - Lucide React -
-Nginx
-
-DevOps - Docker - Docker Compose - SQL Server container -
-Multi-stage Docker builds
-
-Architecture
-
+```text
 Team Task Management/
+│
 ├── Backend/
 │   ├── TeamTaskManagement.slnx
+│   │
 │   └── TeamTaskManagement.API/
 │       ├── Controllers/
 │       ├── DTOs/
@@ -108,6 +132,7 @@ Team Task Management/
 │       ├── Program.cs
 │       ├── appsettings.json
 │       └── Dockerfile
+│
 ├── Frontend/
 │   ├── src/
 │   │   ├── Api/
@@ -116,41 +141,39 @@ Team Task Management/
 │   │   ├── pages/
 │   │   ├── routes/
 │   │   └── Utils/
+│   │
 │   ├── package.json
 │   ├── Dockerfile
 │   └── nginx.conf
+│
 ├── .env.example
 ├── .gitignore
-└── docker-compose.yml
+├── docker-compose.yml
+└── README.md
+👤 Role Permissions
+Capability	Admin	Manager	User
+Login / Register	✅	✅	✅
+View Dashboard	✅	✅	✅
+View Tasks	✅	✅	✅
+Create Tasks	✅	✅	Limited
+Assign Tasks	✅	✅	Limited
+Update Permitted Task Status	✅	✅	✅
+Create Teams	✅	✅	❌
+Manage Team Members	✅	✅	❌
+Comments	✅	✅	✅
+Notifications	✅	✅	✅
+Manage Users	✅	❌	❌
+Change User Roles	✅	❌	❌
+Activate / Deactivate Users	✅	❌	❌
 
-Role Permissions
+Backend authorization is authoritative. Frontend role restrictions are primarily used for navigation and user experience.
 
-Capability                      Admin   Manager    User
+🔌 API
 
-Login/Register                   Yes      Yes       Yes
-Dashboard                        Yes      Yes       Yes
-View tasks                       Yes      Yes       Yes
-Create/assign tasks              Yes      Yes     Limited
-Update permitted task status     Yes      Yes       Yes
-Create teams                     Yes      Yes       No
-Manage team members              Yes      Yes       No
-Comments                         Yes      Yes       Yes
-Notifications                    Yes      Yes       Yes
-Manage users                     Yes      No        No
-Change user roles                Yes      No        No
-Activate/deactivate users        Yes      No        No
-
-Backend authorization is authoritative; frontend restrictions primarily
-control navigation and user experience.
-
-API
-
-The backend exposes REST endpoints under:
+The backend exposes REST API endpoints under:
 
 /api
-
-Core areas:
-
+Main API Areas
 /api/Auth
 /api/Users
 /api/Teams
@@ -158,76 +181,104 @@ Core areas:
 /api/Comments
 /api/Notifications
 /api/Dashboard
+Swagger
 
-Swagger:
+When running the API in Development mode:
 
 http://localhost:5138/swagger
+🐳 Running with Docker Compose
 
-Run with Docker Compose
+Docker Compose is the recommended way to run the complete application.
 
 Prerequisites
 
-Install Docker Desktop and Git.
+Install:
 
-1. Clone
-
+Docker Desktop
+Git
+1. Clone the Repository
 git clone https://github.com/mukulparmar0110/team-task-management.git
 cd team-task-management
-
-2. Configure environment
-
+2. Create Environment File
 cp .env.example .env
 
-Update .env:
+Update .env with your own secure values:
 
 MSSQL_SA_PASSWORD=your-secure-sql-server-password
 JWT_SECRET_KEY=your-secure-jwt-secret
 
-Never commit .env.
+Never commit .env to Git.
 
-3. Start
-
+3. Start the Application
 docker compose up --build
+4. Open the Application
 
-4. Open
-
-Frontend:
+Frontend
 
 http://localhost:5173
 
-Backend:
+Backend
 
 http://localhost:5138
 
-Swagger:
+Swagger
 
 http://localhost:5138/swagger
+5. Stop the Application
 
-5. Stop
+Press:
 
-Press Ctrl+C, or run:
+Ctrl+C
+
+Or run:
 
 docker compose down
 
-Do not use docker compose down -v unless you intentionally want to
-delete the persistent SQL Server volume.
+Do not use docker compose down -v unless you intentionally want to delete the persistent SQL Server volume.
 
-Run Backend Locally
+💻 Running the Backend Locally
+
+From the project root:
 
 cd Backend/TeamTaskManagement.API
-dotnet restore
-dotnet build
-dotnet run
 
-Local secrets should be configured with User Secrets:
+Restore dependencies:
+
+dotnet restore
+
+Build:
+
+dotnet build
+
+Run:
+
+dotnet run
+Local Secrets
+
+The backend uses .NET User Secrets for local development.
+
+Set the database connection string:
 
 dotnet user-secrets set "ConnectionStrings:DefaultConnection" "YOUR_CONNECTION_STRING"
+
+Set the JWT secret:
+
 dotnet user-secrets set "Jwt:SecretKey" "YOUR_JWT_SECRET"
 
-Run Frontend Locally
+Secrets should never be committed to source control.
+
+🎨 Running the Frontend Locally
+
+From the project root:
 
 cd Frontend
+
+Install dependencies:
+
 npm install
+
+Start the development server:
+
 npm run dev
 
 The frontend uses:
@@ -237,102 +288,128 @@ VITE_API_URL
 Example:
 
 VITE_API_URL=http://localhost:5138/api
+🗄️ Database
 
-Database
+The application uses:
 
-The application uses SQL Server with Entity Framework Core migrations.
+SQL Server
+Entity Framework Core
+EF Core migrations
 
-Database initialization applies available migrations during startup.
-Docker Compose persists SQL Server data using the sqlserver_data named
-volume.
+Database initialization applies available migrations during application startup.
 
-Sample Assessment Accounts
+When running through Docker Compose, SQL Server data is persisted using the named Docker volume:
 
-Role      Email                    Password
+sqlserver_data
+🔑 Sample Assessment Accounts
 
-Admin     admin@teamtask.com     Admin@12345
-Manager   manager@teamtask.com   Manager@12345
-User      user@teamtask.com      User@12345
+The application includes seeded accounts for development and assessment purposes.
 
-These accounts are intended for local development and assessment
-demonstrations. For a real production deployment, replace fixed demo
-credentials with a secure administrator bootstrap process.
+Role	Email	Password
+Admin	admin@teamtask.com	Admin@12345
+Manager	manager@teamtask.com	Manager@12345
+User	user@teamtask.com	User@12345
 
-Security
+These credentials are intended for local development and assessment demonstrations. For production deployment, fixed demo credentials should be replaced with a secure administrator bootstrap process.
 
-The project includes: - BCrypt password hashing - JWT authentication -
-JWT issuer, audience, and lifetime validation - Role-based
-authorization - Backend authorization checks - Active-status checks
-during login - Protected frontend routes - Admin-only user management -
-Environment-based secret configuration - .env Git protection - EF Core
-relational constraints and indexes - Persistent SQL Server storage
+🔒 Security
 
-Git & Secrets
+The project includes:
 
-The repository tracks .env.example but ignores .env.
+BCrypt password hashing
+JWT authentication
+JWT issuer validation
+JWT audience validation
+JWT lifetime validation
+Role-based authorization
+Backend authorization checks
+Active-user validation during login
+Protected frontend routes
+Admin-only user management
+Environment-based secret configuration
+.env protection through .gitignore
+EF Core relational constraints
+Database indexes
+Persistent SQL Server storage
+🔐 Git & Secrets
 
-Verify locally:
+The repository intentionally tracks:
+
+.env.example
+
+The actual environment file is ignored:
+
+.env
+
+Verify that .env is ignored:
 
 git check-ignore -v .env
 
-Review changes before pushing:
+Before committing changes:
 
 git status
+
+Review staged changes:
+
 git diff --cached
 
-Typical workflow:
+Typical Git workflow:
 
 git add .
 git commit -m "Describe your change"
 git push
+🧪 Build Verification
+Backend
+cd Backend/TeamTaskManagement.API
+dotnet build
+Frontend
+cd Frontend
+npm run build
+Docker
 
-Project Status
+From the project root:
 
-Core assessment requirements are implemented:
+docker compose build
+📈 Project Status
 
-Authentication and registration
+The current implementation covers the core assessment requirements:
 
-JWT authorization
+✅ Authentication
+✅ Registration and Login
+✅ JWT Authentication
+✅ Role-Based Authorization
+✅ Admin Role
+✅ Manager Role
+✅ User Role
+✅ User Management
+✅ Team Management
+✅ Team Members
+✅ Task Creation
+✅ Task Assignment
+✅ Task Status Tracking
+✅ Task Priorities
+✅ Task Deadlines
+✅ Task Filtering
+✅ Comments
+✅ Notifications
+✅ Dashboard
+✅ Responsive React Frontend
+✅ REST API
+✅ SQL Server
+✅ Entity Framework Core
+✅ Swagger / OpenAPI
+✅ Docker
+✅ Docker Compose
+✅ Persistent Database Volume
+✅ GitHub Repository
+✅ Environment Secret Protection
+✅ Project Documentation
+🌐 Repository
 
-Admin, Manager, and User roles
-
-User management
-
-Team management
-
-Task creation and assignment
-
-Task status tracking
-
-Task filtering
-
-Comments
-
-In-app notifications
-
-Dashboard
-
-Responsive frontend
-
-Swagger/OpenAPI
-
-SQL Server + EF Core
-
-Dockerized backend
-
-Dockerized frontend
-
-Docker Compose full-stack setup
-
-Persistent database volume
-
-Git/GitHub integration
-
-Repository
+GitHub:
 
 https://github.com/mukulparmar0110/team-task-management
 
-License
+📄 License
 
-This project is provided for development, assessment, and portfolio
-purposes.
+This project is provided for development, assessment, and portfolio purposes.
