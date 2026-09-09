@@ -1,0 +1,14 @@
+namespace TeamTaskManagement.API.DTOs.Tasks;
+
+public class TaskListResponse
+{
+    public List<TaskResponse> Tasks { get; set; } = new();
+
+    public int TotalCount { get; set; }
+
+    public int Page { get; set; }
+
+    public int PageSize { get; set; }
+
+    public int TotalPages { get; set; }
+}

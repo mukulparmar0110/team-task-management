@@ -1,0 +1,87 @@
+services:
+
+  # =========================================================
+  # SQL Server
+  # =========================================================
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64
+    container_name: teamtaskmanagement-sqlserver
+
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+
+    ports:
+      - "1433:1433"
+
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+    restart: unless-stopped
+
+
+  # =========================================================
+  # Backend - ASP.NET Core API
+  # =========================================================
+
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: TeamTaskManagement.API/Dockerfile
+
+    container_name: teamtaskmanagement-backend
+
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=TeamTaskManagementDb;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;"
+
+      Jwt__SecretKey: ${JWT_SECRET_KEY}
+      Jwt__Issuer: TeamTaskManagement.API
+      Jwt__Audience: TeamTaskManagement.Client
+      Jwt__ExpirationMinutes: 60
+
+      FrontendUrl: http://localhost:5173
+
+    ports:
+      - "5138:8080"
+
+    depends_on:
+      - sqlserver
+
+    restart: unless-stopped
+
+
+  # =========================================================
+  # Frontend - React + Nginx
+  # =========================================================
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+
+      args:
+        VITE_API_URL: http://localhost:5138/api
+
+    container_name: teamtaskmanagement-frontend
+
+    ports:
+      - "5173:80"
+
+    depends_on:
+      - backend
+
+    restart: unless-stopped
+
+
+# =========================================================
+# Persistent Volumes
+# =========================================================
+
+volumes:
+
+  sqlserver_data:

@@ -1,0 +1,82 @@
+# =========================
+# .NET / Visual Studio
+# =========================
+
+**/bin/
+**/obj/
+**/.vs/
+**/*.user
+**/*.suo
+**/*.userosscache
+**/*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Rider
+.idea/
+*.sln.iml
+
+# Test results
+TestResults/
+**/TestResults/
+*.trx
+
+# =========================
+# .NET User Secrets
+# =========================
+
+**/secrets.json
+
+# =========================
+# Environment files
+# =========================
+
+.env
+.env.*
+!.env.example
+
+# =========================
+# Node / React
+# =========================
+
+**/node_modules/
+**/dist/
+**/build/
+**/.vite/
+
+# npm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# OS files
+# =========================
+
+.DS_Store
+Thumbs.db
+
+# =========================
+# Coverage
+# =========================
+
+coverage/
+**/coverage/
+
+# =========================
+# Generated files
+# =========================
+
+*.generated.cs
+
+# =========================
+# Local database / files
+# =========================
+
+*.db
+*.db-shm
+*.db-wal
