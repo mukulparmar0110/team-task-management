@@ -188,11 +188,12 @@ using (var scope = app.Services.CreateScope())
 // HTTP Request Pipeline
 // ---------------------------------------------------------
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// Swagger is available in both Development and Production
+// so the API can be documented and tested from the deployed
+// Render environment as well.
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
