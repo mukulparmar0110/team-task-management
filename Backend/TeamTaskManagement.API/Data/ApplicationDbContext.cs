@@ -39,7 +39,7 @@ public class ApplicationDbContext : DbContext
                 .HasMaxLength(20);
 
             entity.Property(u => u.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
         });
 
         // Team
@@ -48,7 +48,7 @@ public class ApplicationDbContext : DbContext
             entity.HasKey(t => t.Id);
 
             entity.Property(t => t.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             entity.HasOne(t => t.CreatedBy)
                 .WithMany(u => u.CreatedTeams)
@@ -93,10 +93,10 @@ public class ApplicationDbContext : DbContext
                 .HasMaxLength(20);
 
             entity.Property(t => t.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             entity.Property(t => t.UpdatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             entity.HasIndex(t => t.AssignedToId);
 
@@ -128,7 +128,7 @@ public class ApplicationDbContext : DbContext
             entity.HasKey(c => c.Id);
 
             entity.Property(c => c.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             entity.HasOne(c => c.Task)
                 .WithMany(t => t.Comments)
@@ -151,7 +151,7 @@ public class ApplicationDbContext : DbContext
                 .HasMaxLength(30);
 
             entity.Property(n => n.CreatedAt)
-                .HasDefaultValueSql("GETUTCDATE()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             entity.HasOne(n => n.User)
                 .WithMany(u => u.Notifications)
